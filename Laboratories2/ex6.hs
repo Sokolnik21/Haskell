@@ -1,5 +1,4 @@
--- import Control.Exception\
-import qualified Control.Exception as E
+{-# LANGUAGE BangPatterns #-}
 
 fib :: (Num a, Eq a) => a -> a
 fib n =
@@ -16,7 +15,7 @@ fib2 n =
 sum' :: Num a => [a] -> a
 sum' []   = 0
 sum' (x:xs) = x + sum' xs
--- overflow between 10000000 and 15000000
+-- overflow between 10000000 and 12000000
 
 prod' :: Num a => [a] -> a -- prod' [1,2,3] = 6
 prod' []      = 1
@@ -71,3 +70,25 @@ sum'2 :: Num a => [a] -> a
 sum'2 xs = loop 0 xs
   where loop acc []     = acc
         loop acc (x:xs) = loop (x + acc) xs
+
+sum'3 :: Num a => [a] -> a
+sum'3 = loop 0
+  where loop acc []     = acc
+        loop acc (x:xs) = loop (x + acc) xs
+-- overflow between 12000000 and 13000000        
+
+prod'2 :: Num a => [a] -> a
+prod'2 = loop 1
+  where loop acc []     = acc
+        loop acc (x:xs) = loop (x * acc) xs
+
+length'2 :: [a] -> Int
+length'2 = loop 0
+  where loop acc []     = acc
+        loop acc (x:xs) = loop (acc + 1) xs
+
+sum'4 :: Num a => [a] -> a
+sum'4 = loop 0
+    where loop !acc []     = acc
+          loop !acc (x:xs) = loop (x + acc) xs
+-- didn't noticed overflow (even at 100000000-size array [almost 10x larger])
