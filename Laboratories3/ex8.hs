@@ -40,3 +40,9 @@ lowerCase   = map' lower
 --             | otherwise = c
 
 -- Observation: list comprehensions are slower than recursive implementation
+
+evalFuncListAt :: a -> [a -> b] -> [b]
+evalFuncListAt x = map ($x)
+
+evalFuncListAtListComp :: a -> [a -> b] -> [b]
+evalFuncListAtListComp x list = [f x | f <- list]
