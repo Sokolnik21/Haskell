@@ -1,3 +1,5 @@
+module Ex3 where
+
 data BinIntTree = EmptyIntBT |
                   IntNodeBT Int BinIntTree BinIntTree
 
